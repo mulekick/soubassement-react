@@ -13,7 +13,9 @@ Basic express use case that embarks all the necessary boilerplate stuff to suppo
 
 ## ⚛️ React support ⚛️
 
-This project is a variation of the ["vanilla"](https://github.com/mulekick/soubassement) soubassement, the only difference being that the toolchain here includes support for JSX and react.
+This project is a variation of the ["vanilla"](https://github.com/mulekick/soubassement) soubassement, the only difference being that the toolchain here includes support for JSX and react. It's actually a case of having done exactly [this](https://react.dev/learn/start-a-new-react-project#can-i-use-react-without-a-framework) even before the new framework-oriented react docs came out :
+
+![This is a alt text.](https://i.imgur.com/Vk6XfpZ.png "The react team approves 😁")
 
 ## Why this
 
