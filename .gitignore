@@ -1,0 +1,16 @@
+# exclude node modules
+node_modules
+# exclude package-lock.json
+package-lock.json
+# exclude certificate and private key
+.server.*
+# exclude build
+build
+# exclude test uploads
+uploads/*
+# exclude jest coverage files
+coverage
+# exclude irrelevant files
+*.old
+# exclude puppeteer screenshots
+screenshot*

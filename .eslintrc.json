@@ -1,0 +1,8 @@
+{
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "extends": [ "plugin:react/recommended", "@mulekick/eslint-config-muleslint" ]
+}
