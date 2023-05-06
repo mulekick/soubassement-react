@@ -4,5 +4,5 @@
             "jsx": true
         }
     },
-    "extends": [ "plugin:react/recommended", "@mulekick/eslint-config-muleslint" ]
+    "extends": [ "plugin:react/recommended", "plugin:react-hooks/recommended", "@mulekick/eslint-config-muleslint" ]
 }

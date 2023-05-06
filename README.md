@@ -145,6 +145,7 @@ All the ```VITE_*``` and ```APP_*``` environment variables can be configured in 
 | <code>[autoprefixer](https://github.com/postcss/autoprefixer)</code>                                                | postcss plugin that adds vendor-specific prefixes to CSS rules       |
 | <code>[babel-plugin-transform-import-meta](https://www.npmjs.com/package/babel-plugin-transform-import-meta)</code> | babel transforms import.meta into legacy code in node.js             |
 | <code>[eslint-plugin-react](https://www.npmjs.com/package/eslint-plugin-react)</code>                               | react specific linting rules for eslint                              |
+| <code>[eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks)</code>                   | enforces the rules of hooks in react functions                       |
 | <code>[jest](https://www.npmjs.com/package/jest)</code>                                                             | delightful javascript testing                                        |
 | <code>[nodemon](https://www.npmjs.com/package/nodemon)</code>                                                       | watch server files and auto restart on file change                   |
 | <code>[postcss](https://postcss.org/)</code>                                                                        | a tool for transforming CSS with JavaScript                          |
