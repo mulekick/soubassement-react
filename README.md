@@ -9,17 +9,17 @@ Basic express use case that embarks all the necessary boilerplate stuff to suppo
 * Client-side UX/UI automated tests (using <code>[jest](https://jestjs.io/)</code>, <code>[testing-library](https://testing-library.com/)</code> and <code>[puppeteer](https://pptr.dev/)</code>)
 * Server auto-restart on file changes during development (using <code>[nodemon](https://nodemon.io/)</code>)
 * HMR and browser auto-reload on file change during development (using <code>[vite](https://vitejs.dev/)</code>)
-* Declarative and component-based user interface development (using <code>[react](https://reactjs.org/)</code>)
+* Declarative and component-based user interface development (using <code>[react](https://react.dev/)</code>)
 
-## React support
+## ⚛️ React support ⚛️
 
-This project is a variation of the ["vanilla"](https://github.com/mulekick/soubassement) soubassement, the only difference being that the toolchain includes support for JSX and react.
+This project is a variation of the ["vanilla"](https://github.com/mulekick/soubassement) soubassement, the only difference being that the toolchain here includes support for JSX and react.
 
 ## Why this
 
 1. The idea is to create a full-stack development environment following these principles :
 
-   ✅ Remain as simple and generic as possible by not doing any integration of any frontend or backend frameworks, websockets library, ORM modules etc ... by default
+   ✅ Remain as simple and generic as possible by not doing any integration of any frontend or backend frameworks, websockets library, ORM modules etc ... by default (react being the only exception)
 
    ✅ Remain as simple and manageable as possible, noticeably by relying on a single package.json file
 
@@ -30,6 +30,33 @@ This project is a variation of the ["vanilla"](https://github.com/mulekick/souba
 3. *In my opinion, basic understanding of how things work and interact with each other in a self-contained development solution is critical : your app may still be 95% functional if something in the business logic code breaks, but when something breaks in the boilerplate code or in the framework, your app instantly becomes 0% functional.*
 
 4. Finally, you can be sure that all the dependencies included are the go-to modules of the ecosystem in their respective areas.
+
+## Prerequisites
+   - Linux distro or WLS2 (debian 11 recommended)
+   - GNU Bash shell (version 5.1.4 recommended)
+   - Openssl (version 1.1.1 recommended)
+   - Node.js (version 18.14.2 recommended)
+   
+## Project scaffolding
+
+1. Use the following command to scaffold a new project using this repo :
+```bash
+npx degit https://github.com/mulekick/soubassement-react.git <your project name>
+```
+
+2. Since everything is served over HTTPS, you'll have to create a key pair for the server _**(do not change the command arguments)**_ : 
+    
+    * **create a private key :**
+    
+    <code>openssl ecparam -param_enc named_curve -name prime256v1 -genkey -noout -outform PEM -out .server.key</code>
+    
+    * **create a self-signed certificate :**
+    
+    <code>openssl req -x509 -key .server.key -new -outform PEM -out .server.crt -verbose</code>
+    
+3. You can then copy/paste the contents of ```.server.key``` and ```.server.crt``` in the dotenv config file of your choice.
+
+*Disclaimer : the point here is not to deliver a lecture on TLS best practices, so I assume you are comfortable enough to decide by yourself how you'll manage your key pairs - in the event you aren't, a dummy key pair is provided in the .env files so HTTPS works out of the box (in those circumstances, seek assistance on the matter prior to pushing anything in production)*
 
 ## Available commands
 
@@ -120,30 +147,3 @@ All the ```VITE_*``` and ```APP_*``` environment variables can be configured in 
 | <code>[terser](https://www.npmjs.com/package/terser)</code>                                                         | required for minification during the vite.js build process           |
 | <code>[vite](https://www.npmjs.com/package/vite)</code>                                                             | next generation froontend tooling                                    |
 | <code>[vite-plugin-webfont-dl](https://www.npmjs.com/package/vite-plugin-webfont-dl)</code>                         | extracts, downloads and injects fonts during the build               |
-
-## Notes
-
-1. Since everything is served over HTTPS, you'll have to create a key pair for the server _**(do not change the command arguments)**_ : 
-    
-    * **create a private key :**
-    
-    <code>openssl ecparam -param_enc named_curve -name prime256v1 -genkey -noout -outform PEM -out .server.key</code>
-    
-    * **create a self-signed certificate :**
-    
-    <code>openssl req -x509 -key .server.key -new -outform PEM -out .server.crt -verbose</code>
-    
-    You can then copy/paste the contents of ```.server.key``` and ```.server.crt``` in the ```.env``` file of your choice.
-
-2. I am keeping an eye on <code>[vitest](https://vitest.dev/)</code> to use as a replacement for the jest + babel combo for running tests (their argument about the redundancy in jest and vite forcing users to configure two different pipelines is irrefutable)
-
-3. <code>[vavite](https://github.com/cyco130/vavite)</code> looks interesting, but I don't see (as of now) the need to perform treeshaking or transpiling on the server code (unless you're using typescript), because a) you're supposed to be in control of which node.js version your app will run on and b) diskspace is not that expensive so you can live with a few kB of unused client modules in your server's filesystem. That's why I chose to silo the frontend and the backend, use vite only for what it is designed to do and rely on time-tested <code>[nodemon](https://www.npmjs.com/package/nodemon)</code> for the backend; that said, if <code>[vavite](https://github.com/cyco130/vavite)</code> is supported in the long run and takes off, I may reconsider.
-
-4. I received this mail a few hours after making this repo public. That's very nice from them to remind me that the **sample** EC key pair that sits in the dotenv files is exposed, but when I clicked that link and was asked to grant them the permission to act on my behalf on github, I passed 😐
-   
-   ![This is a alt text.](https://i.imgur.com/tJPzwCS.png "I don't doubt that they're nice people, but they're not related to github.")
-
-5. Use the following command to scaffold a new project using this repo :
-```bash
-npx degit git@github.com:mulekick/codebase/prototypes/soubassement-react <your project name>
-```
