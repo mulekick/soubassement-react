@@ -1,5 +1,5 @@
 {
-    "name": "soubassement",
+    "name": "soubassement-react",
     "version": "1.0.0",
     "private": true,
     "description": "Soubassement with support for react transpilation of client-side code",

@@ -39,9 +39,14 @@ This project is a variation of the ["vanilla"](https://github.com/mulekick/souba
    
 ## Project scaffolding
 
-1. Use the following command to scaffold a new project using this repo :
+1. Use the following commands to scaffold a new project using this repo :
 ```bash
-npx degit https://github.com/mulekick/soubassement-react.git <your project name>
+# clone the repository using degit
+npx degit https://github.com/mulekick/soubassement-react.git my-new-project
+# cd into your project's directory
+cd my-new-project
+# install dependencies
+npm install
 ```
 
 2. Since everything is served over HTTPS, you'll have to create a key pair for the server _**(do not change the command arguments)**_ : 
