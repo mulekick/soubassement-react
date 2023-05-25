@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # app name
-appname="express.sample.app"
+appname="soubassement.react.sample"
 # vite config file
 vitecfg="vite.config.js"
 # project build folder

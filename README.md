@@ -63,7 +63,7 @@ npm install
     
 3. You can then copy/paste the contents of ```.server.key``` and ```.server.crt``` in the dotenv config file of your choice.
 
-*Disclaimer : the point here is not to deliver a lecture on TLS best practices, so I assume you are comfortable enough to decide by yourself how you'll manage your key pairs - in the event you aren't, a dummy key pair is provided in the .env files so HTTPS works out of the box (in those circumstances, seek assistance on the matter prior to pushing anything in production)*
+*Disclaimer : the point here is not to deliver a lecture on TLS best practices or secrets management in production, so I assume you are comfortable enough to decide by yourself how you'll manage your key pairs - in the event you aren't, a dummy key pair is provided in the .env files so HTTPS works out of the box (in those circumstances, seek assistance on the matter prior to pushing anything in production)*
 
 ## Available commands
 
@@ -112,46 +112,52 @@ All the ```VITE_*``` and ```APP_*``` environment variables can be configured in 
 | ```/.postcssrc.json```       | postcss config file (includes postcss plugins that will be leveraged by vite)              |
 | ```/.browserslistrc```       | <code>[browserslist](https://browsersl.ist/)</code> file used by babel and autoprefixer    |
 
+## Important note
+
+   🛑 _The vite build process is going to pack all the code that executes in the browser, **as well as all the dependencies for that code**, into a self-sufficient optimized bundle._
+   
+   🛑 _As a result, it is important to **install frontend dependencies as dev dependencies** to ensure that the dependencies going into the docker image are **only those needed by express**._
+
 ## Dependencies
 
-| Module                                                                                                                | Usage                                             |
-| --------------------------------------------------------------------------------------------------------------------  |---------------------------------------------------|
-| <code>[@fortawesome/fontawesome-free](https://www.npmjs.com/package/@fortawesome/fontawesome-free)</code>             | fontawesome free icons package                    |
-| <code>[@fortawesome/fontawesome-svg-core](https://www.npmjs.com/package/@fortawesome/fontawesome-svg-core)</code>     | core svg library for fontawesome                  |
-| <code>[@fortawesome/free-brands-svg-icons](https://www.npmjs.com/package/@fortawesome/free-brands-svg-icons)</code>   | free fontawesome icons (brands family)            |
-| <code>[@fortawesome/free-regular-svg-icons](https://www.npmjs.com/package/@fortawesome/free-regular-svg-icons)</code> | free fontawesome icons (regular family)           |
-| <code>[@fortawesome/free-solid-svg-icons](https://www.npmjs.com/package/@fortawesome/free-solid-svg-icons)</code>     | free fontawesome icons (solid family)             |
-| <code>[@fortawesome/react-fontawesome](https://www.npmjs.com/package/@fortawesome/react-fontawesome)</code>           | fontawesome 5 react component using svg with js   |
-| <code>[@mulekick/pepe-ascii](https://www.npmjs.com/package/@mulekick/pepe-ascii)</code>                               | used as an example of client-side module bundling |
-| <code>[cookie-parser](https://www.npmjs.com/package/cookie-parser)</code>                                             | parse cookies from HTTP requests header           |
-| <code>[cors](https://www.npmjs.com/package/cors)</code>                                                               | serve or reject cross origin requests             |
-| <code>[dotenv](https://www.npmjs.com/package/dotenv)</code>                                                           | load server environment variables                 |
-| <code>[express](https://www.npmjs.com/package/express)</code>                                                         | node.js web server framework                      |
-| <code>[formidable](https://www.npmjs.com/package/formidable)</code>                                                   | handle multipart data and file uploads            |
-| <code>[helmet](https://www.npmjs.com/package/helmet)</code>                                                           | add security-related headers to HTTP responses    |
-| <code>[jose](https://www.npmjs.com/package/jose)</code>                                                               | JSON web tokens javascript implementation         |
-| <code>[morgan](https://www.npmjs.com/package/morgan)</code>                                                           | HTTP logger for express.js                        |
-| <code>[react](https://www.npmjs.com/package/react)</code>                                                             | javascript library for creating user interfaces   |
-| <code>[react-dom](https://www.npmjs.com/package/react-dom)</code>                                                     | react entry point to the DOM and server renderers |
+| Module                                                                       | Usage                                             |
+| -----------------------------------------------------------------------------|---------------------------------------------------|
+| <code>[cookie-parser](https://www.npmjs.com/package/cookie-parser)</code>    | parse cookies from HTTP requests header           |
+| <code>[cors](https://www.npmjs.com/package/cors)</code>                      | serve or reject cross origin requests             |
+| <code>[dotenv](https://www.npmjs.com/package/dotenv)</code>                  | load server environment variables                 |
+| <code>[express](https://www.npmjs.com/package/express)</code>                | node.js web server framework                      |
+| <code>[formidable](https://www.npmjs.com/package/formidable)</code>          | handle multipart data and file uploads            |
+| <code>[helmet](https://www.npmjs.com/package/helmet)</code>                  | add security-related headers to HTTP responses    |
+| <code>[jose](https://www.npmjs.com/package/jose)</code>                      | JSON web tokens javascript implementation         |
+| <code>[morgan](https://www.npmjs.com/package/morgan)</code>                  | HTTP logger for express.js                        |
 
 ## Dev dependencies
                         
-| Module                                                                                                              | Usage                                                                |
-| --------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------|
-| <code>[@babel/preset-env](https://www.npmjs.com/package/@babel/preset-env)</code>                                   | required by babel-jest to compile the code before tests              |
-| <code>[@mulekick/eslint-config-muleslint](https://www.npmjs.com/package/@mulekick/eslint-config-muleslint)</code>   | Mulekicks's base JS / Node ESLint configuration                      |
-| <code>[@vitejs/plugin-legacy](https://www.npmjs.com/package/@vitejs/plugin-legacy)</code>                           | enable legacy browsers support in vite.js builds                     |
-| <code>[@vitejs/plugin-react](https://www.npmjs.com/package/@vitejs/plugin-react)</code>                             | the all-in-one Vite plugin for React projects                        |
-| <code>[autoprefixer](https://github.com/postcss/autoprefixer)</code>                                                | postcss plugin that adds vendor-specific prefixes to CSS rules       |
-| <code>[babel-plugin-transform-import-meta](https://www.npmjs.com/package/babel-plugin-transform-import-meta)</code> | babel transforms import.meta into legacy code in node.js             |
-| <code>[eslint-plugin-react](https://www.npmjs.com/package/eslint-plugin-react)</code>                               | react specific linting rules for eslint                              |
-| <code>[eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks)</code>                   | enforces the rules of hooks in react functions                       |
-| <code>[jest](https://www.npmjs.com/package/jest)</code>                                                             | delightful javascript testing                                        |
-| <code>[nodemon](https://www.npmjs.com/package/nodemon)</code>                                                       | watch server files and auto restart on file change                   |
-| <code>[postcss](https://postcss.org/)</code>                                                                        | a tool for transforming CSS with JavaScript                          |
-| <code>[pptr-testing-library](https://www.npmjs.com/package/pptr-testing-library)</code>                             | testing-library based querying functions for puppeteer               |
-| <code>[puppeteer](https://www.npmjs.com/package/puppeteer)</code>                                                   | high-level API to control Chrome/Chromium over the DevTools Protocol |
-| <code>[sass](https://www.npmjs.com/package/sass)</code>                                                             | auto-compile SCSS files to CSS in vite.js builds                     |
-| <code>[terser](https://www.npmjs.com/package/terser)</code>                                                         | required for minification during the vite.js build process           |
-| <code>[vite](https://www.npmjs.com/package/vite)</code>                                                             | next generation froontend tooling                                    |
-| <code>[vite-plugin-webfont-dl](https://www.npmjs.com/package/vite-plugin-webfont-dl)</code>                         | extracts, downloads and injects fonts during the build               |
+| Module                                                                                                                | Usage                                                                |
+| ----------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------|
+| <code>[@babel/preset-env](https://www.npmjs.com/package/@babel/preset-env)</code>                                     | required by babel-jest to compile the code before tests              |
+| <code>[@fortawesome/fontawesome-free](https://www.npmjs.com/package/@fortawesome/fontawesome-free)</code>             | fontawesome free icons package                                       |
+| <code>[@fortawesome/fontawesome-svg-core](https://www.npmjs.com/package/@fortawesome/fontawesome-svg-core)</code>     | core svg library for fontawesome                                     |
+| <code>[@fortawesome/free-brands-svg-icons](https://www.npmjs.com/package/@fortawesome/free-brands-svg-icons)</code>   | free fontawesome icons (brands family)                               |
+| <code>[@fortawesome/free-regular-svg-icons](https://www.npmjs.com/package/@fortawesome/free-regular-svg-icons)</code> | free fontawesome icons (regular family)                              |
+| <code>[@fortawesome/free-solid-svg-icons](https://www.npmjs.com/package/@fortawesome/free-solid-svg-icons)</code>     | free fontawesome icons (solid family)                                |
+| <code>[@fortawesome/react-fontawesome](https://www.npmjs.com/package/@fortawesome/react-fontawesome)</code>           | fontawesome 5 react component using svg with js                      |
+| <code>[@mulekick/pepe-ascii](https://www.npmjs.com/package/@mulekick/pepe-ascii)</code>                               | used as an example of client-side module bundling                    |
+| <code>[@mulekick/eslint-config-muleslint](https://www.npmjs.com/package/@mulekick/eslint-config-muleslint)</code>     | Mulekicks's base JS / Node ESLint configuration                      |
+| <code>[@vitejs/plugin-legacy](https://www.npmjs.com/package/@vitejs/plugin-legacy)</code>                             | enable legacy browsers support in vite.js builds                     |
+| <code>[@vitejs/plugin-react](https://www.npmjs.com/package/@vitejs/plugin-react)</code>                               | the all-in-one Vite plugin for React projects                        |
+| <code>[autoprefixer](https://github.com/postcss/autoprefixer)</code>                                                  | postcss plugin that adds vendor-specific prefixes to CSS rules       |
+| <code>[babel-plugin-transform-import-meta](https://www.npmjs.com/package/babel-plugin-transform-import-meta)</code>   | babel transforms import.meta into legacy code in node.js             |
+| <code>[eslint-plugin-react](https://www.npmjs.com/package/eslint-plugin-react)</code>                                 | react specific linting rules for eslint                              |
+| <code>[eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks)</code>                     | enforces the rules of hooks in react functions                       |
+| <code>[jest](https://www.npmjs.com/package/jest)</code>                                                               | delightful javascript testing                                        |
+| <code>[nodemon](https://www.npmjs.com/package/nodemon)</code>                                                         | watch server files and auto restart on file change                   |
+| <code>[postcss](https://postcss.org/)</code>                                                                          | a tool for transforming CSS with JavaScript                          |
+| <code>[pptr-testing-library](https://www.npmjs.com/package/pptr-testing-library)</code>                               | testing-library based querying functions for puppeteer               |
+| <code>[puppeteer](https://www.npmjs.com/package/puppeteer)</code>                                                     | high-level API to control Chrome/Chromium over the DevTools Protocol |
+| <code>[react](https://www.npmjs.com/package/react)</code>                                                             | javascript library for creating user interfaces                      |
+| <code>[react-dom](https://www.npmjs.com/package/react-dom)</code>                                                     | react entry point to the DOM and server renderers                    |
+| <code>[sass](https://www.npmjs.com/package/sass)</code>                                                               | auto-compile SCSS files to CSS in vite.js builds                     |
+| <code>[terser](https://www.npmjs.com/package/terser)</code>                                                           | required for minification during the vite.js build process           |
+| <code>[vite](https://www.npmjs.com/package/vite)</code>                                                               | next generation froontend tooling                                    |
+| <code>[vite-plugin-webfont-dl](https://www.npmjs.com/package/vite-plugin-webfont-dl)</code>                           | extracts, downloads and injects fonts during the build               |
