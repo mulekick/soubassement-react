@@ -1,6 +1,6 @@
 # [soubassement-react](https://www.wordscope.com/soubassement+en+anglais.html)
 
-Basic express use case that embarks all the necessary boilerplate stuff to support :
+[Full-stack unopinionated express powered javascript framework](https://stackoverflow.com/questions/802050/what-is-opinionated-software) that also embarks all the necessary boilerplate stuff to support :
 
 * File uploads and multipart form data handling (using <code>[formidable](https://github.com/node-formidable/formidable)</code>)
 * Stateless client-side sessions management with <code>[JSON web tokens](https://jwt.io/)</code> (using <code>[jose](https://github.com/panva/jose)</code> and <code>[cookie-parser](https://www.npmjs.com/package/cookie-parser)</code>)
