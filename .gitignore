@@ -8,6 +8,8 @@ package-lock.json
 build
 # exclude test uploads
 uploads/*
+# but commit the directory regardless
+!uploads/.placeholder.file
 # exclude jest coverage files
 coverage
 # exclude irrelevant files

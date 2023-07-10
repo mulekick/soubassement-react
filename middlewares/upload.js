@@ -1,14 +1,8 @@
-// import primitives
-import {constants} from "node:fs";
-import {copyFile} from "fs/promises";
-
 // import modules
 import formidable from "formidable";
 import config from "../config.js";
 
 const
-    // destructure import
-    {IncomingForm} = formidable,
     // destructure config values
     {APP_UPLOAD_DIR} = config,
     // file upload middleware function
@@ -19,27 +13,21 @@ const
         // I opted to keep the form processing inside a middleware over using a helper ...
         try {
 
-            const
+            // rewrite handling of uploads following formidable 3xx breaking changes ...
+            // also, the options.maxTotalFileSize exceeded error terminates connections
+            // systematically when in dev mode and ONLY ON FIREFOX when in prod mode.
+            await formidable({
+                keepExtensions: true,
+                allowEmptyFiles: false,
+                // max upload size
+                maxFileSize: 100 * 1024,
+                // server upload directory
+                uploadDir: APP_UPLOAD_DIR,
+                // preserve original file name (existing files will be overwritten ...)
+                filename: (n, e, p) => p.originalFilename
+            })
                 // parse request
-                {afile: {originalFilename, filepath}} = await new Promise((resolve, reject) => {
-                    // init formidable
-                    new IncomingForm({
-                        keepExtensions: true,
-                        allowEmptyFiles: false,
-                        maxFileSize: 100 * 1024
-                    })
-                        // parse request
-                        .parse(req, (err, fields, files) => {
-                            // if error
-                            if (err)
-                                reject(err);
-                            // else, resolve
-                            resolve(files);
-                        });
-                });
-
-            // copy file
-            await copyFile(filepath, `${ APP_UPLOAD_DIR }/${ originalFilename }`, constants.COPYFILE_EXCL);
+                .parse(req);
 
             return res
                 // send response
