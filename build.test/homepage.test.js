@@ -4,6 +4,7 @@
 import process from "node:process";
 import console from "node:console";
 import {fork} from "node:child_process";
+import {stat, rm} from "node:fs/promises";
 
 // import modules
 import puppeteer from "puppeteer";
@@ -12,7 +13,9 @@ import config from "../config.js";
 
 const
     // destructure config values
-    {APP_PORT} = config,
+    {dirName, VITE_SRV_ENTRYPOINT, APP_HOST, APP_PORT, APP_UPLOAD_DIR} = config,
+    // homepage url
+    homepageUrl = `https://${ APP_HOST }:${ APP_PORT }`,
     // create abort controller
     controller = new AbortController(),
     // extract testing-library's puppeteer queries ...
@@ -57,7 +60,7 @@ describe(`app integration tests suite`, () => {
         });
         page = await browser.newPage();
         // navigate to home page (all tests will run on a single page load) ...
-        response = await page.goto(`https://localhost:${ APP_PORT }`);
+        response = await page.goto(homepageUrl);
         documentHandle = await getDocument(page);
     });
 
@@ -121,8 +124,38 @@ describe(`app integration tests suite`, () => {
         });
     });
 
+    describe(`when uploading a file`, () => {
+        // test /upload route
+        it(`should upload the file to the server "${ APP_UPLOAD_DIR }" folder`, async() => {
+            const
+                // set upload endpoint location
+                uploadEndpoint = `${ homepageUrl }${ VITE_SRV_ENTRYPOINT }/upload`,
+                // retrieve an element handle to the file input element
+                fileInput = await getByTestId(documentHandle, `afile`),
+                // retrieve an element handle to the submit button
+                submitButton = await getByText(documentHandle, `upload file`);
+
+            // set file input value to some local file path
+            await fileInput.uploadFile(`${ dirName }/README.md`);
+
+            // submit the form
+            await submitButton.click();
+
+            // wait for the file upload POST request (tricky operator precedence situation)
+            await page.waitForRequest(r => (r.url() === uploadEndpoint) && (r.method() === `POST`), {timeout: 1e3});
+
+            // wait for 302 HTTP response and redirection
+            await page.waitForResponse(r => (r.url() === uploadEndpoint) && (r.status() === 302), {timeout: 1e3});
+
+            // stat uploaded file (will throw if file upload failed ...)
+            await stat(`${ dirName }${ APP_UPLOAD_DIR }/README.md`);
+        });
+    });
+
     // teardown
     afterAll(async() => {
+        // remove uploaded file
+        await rm(`${ dirName }${ APP_UPLOAD_DIR }/README.md`, {force: true});
         // close browser
         console.log(`stopping browser ...`);
         await browser.close();
