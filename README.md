@@ -42,6 +42,7 @@ This project is a variation of the ["vanilla"](https://github.com/mulekick/souba
 ## Project scaffolding
 
 1. Use the following commands to scaffold a new project using this repo :
+
 ```bash
 # clone the repository using degit
 npx degit https://github.com/mulekick/soubassement-react.git my-new-project
@@ -52,14 +53,13 @@ npm install
 ```
 
 2. Since everything is served over HTTPS, you'll have to create a key pair for the server _**(do not change the command arguments)**_ : 
-    
-    * **create a private key :**
-    
-    <code>openssl ecparam -param_enc named_curve -name prime256v1 -genkey -noout -outform PEM -out .server.key</code>
-    
-    * **create a self-signed certificate :**
-    
-    <code>openssl req -x509 -key .server.key -new -outform PEM -out .server.crt -verbose</code>
+
+```bash
+# create a private key
+openssl ecparam -param_enc named_curve -name prime256v1 -genkey -noout -outform PEM -out .server.key
+# create a self-signed certificate
+openssl req -x509 -key .server.key -new -outform PEM -out .server.crt -verbose
+```
     
 3. You can then copy/paste the contents of ```.server.key``` and ```.server.crt``` in the dotenv config file of your choice.
 
